@@ -4,8 +4,9 @@ import {
     TLocalGurdian,
     TStudent,
     TUserName,
-    StudentModel,
 } from "./student.interface";
+import AppError from "../../errors/AppError";
+import httpStatus from "http-status";
 
 const userNameSchema = new Schema<TUserName>({
     firstName: {
@@ -85,7 +86,7 @@ const localGurdianSchema = new Schema<TLocalGurdian>({
     },
 });
 
-const studentSchema = new Schema<TStudent, StudentModel>(
+const studentSchema = new Schema<TStudent>(
     {
         id: {
             type: String,
@@ -125,7 +126,7 @@ const studentSchema = new Schema<TStudent, StudentModel>(
         contactNo: {
             type: String,
             required: [true, "Contact number is required"],
-            unique: true,
+            // unique: true,
         },
         emergencyContactNo: {
             type: String,
@@ -159,39 +160,33 @@ const studentSchema = new Schema<TStudent, StudentModel>(
             type: Schema.Types.ObjectId,
             ref: "AcademicSemester",
         },
+        academicDepartment: {
+            type: Schema.Types.ObjectId,
+            ref: "AcademicDepartment",
+        },
         isDeleted: {
             type: Boolean,
             default: false,
         },
     },
     {
-        toJSON: {
-            virtuals: true,
-        },
+        timestamps: true,
     },
 );
 
-// // query middleware
-// studentSchema.pre("find", function (next) {
-//     this.find({ isDeleted: { $ne: true } });
+studentSchema.pre("findOneAndUpdate", async function (next) {
+    // this keyword available only "save" method
 
-//     next();
-// });
+    const query = this.getQuery();
+    // const update = this.getUpdate();
 
-// studentSchema.pre("findOne", function (next) {
-//     this.find({ isDeleted: { $ne: true } });
+    const isStudentExist = await Student.findOne(query);
 
-//     next();
-// });
+    if (!isStudentExist) {
+        throw new AppError(httpStatus.BAD_REQUEST, "This student not exists");
+    }
 
-// studentSchema.pre("aggregate", function (next) {
-//     // this.find({ isDeleted: { $ne: true } });
+    next();
+});
 
-//     this.pipeline().unshift({ $match: { isDeleted: { $ne: true } } });
-
-//     // console.log(this.pipeline());
-
-//     next();
-// });
-
-export const Student = model<TStudent, StudentModel>("Student", studentSchema);
+export const Student = model<TStudent>("Student", studentSchema);

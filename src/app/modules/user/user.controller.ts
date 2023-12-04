@@ -6,6 +6,8 @@ import catchAsync from "../../utils/catchAsync";
 const createStudent = catchAsync(async (req, res) => {
     const { password, student: studentData } = req.body;
 
+    console.log(studentData, "student data console");
+
     // const { error, value } = studentValidationSchema.validate(studentData);
 
     // console.log({ error }, { value });
@@ -24,6 +26,8 @@ const createStudent = catchAsync(async (req, res) => {
         password,
         studentData,
     );
+
+    console.log(result, "this is result");
 
     sendResponse(res, {
         statusCode: httpStatus.OK,
