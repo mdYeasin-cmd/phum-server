@@ -16,10 +16,7 @@ app.use("/api/v1", router);
 
 // testing route
 app.get("/", (req: Request, res: Response) => {
-    // let b;
-
-    // const a = 10;
-    res.send("Hello");
+    res.send("PH University server is running...");
 });
 
 // global error handler
