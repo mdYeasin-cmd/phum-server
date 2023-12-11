@@ -170,7 +170,7 @@ const deleteStudentFromDB = async (id: string) => {
         }
 
         // get user _id from deletedAdmin
-        const userId = deletedStudent.user;
+        const userId = deletedStudent.user; // Here userId is object id
 
         const deletedUser = await User.findByIdAndUpdate(
             userId,
@@ -189,7 +189,6 @@ const deleteStudentFromDB = async (id: string) => {
     } catch (error) {
         await session.abortTransaction();
         await session.endSession();
-        console.log(error);
         throw new AppError(
             httpStatus.BAD_REQUEST,
             "Failed to delete student! catch",
