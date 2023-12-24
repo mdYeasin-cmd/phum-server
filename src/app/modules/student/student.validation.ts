@@ -29,7 +29,7 @@ const createLocalGurdianValidationSchema = z.object({
 
 const createStudentValidationSchema = z.object({
     body: z.object({
-        password: z.string().max(25),
+        password: z.string().max(25).optional(),
         student: z.object({
             name: createUserNameValidationSchema,
             gender: z.enum(["male", "female", "other"]),
@@ -56,7 +56,7 @@ const createStudentValidationSchema = z.object({
                 invalid_type_error: "Academic department name must be a string",
                 required_error: "Academic department name is required",
             }),
-            profileImg: z.string(),
+            // profileImg: z.string(),
         }),
     }),
 });
