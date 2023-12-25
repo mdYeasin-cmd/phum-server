@@ -1,1 +1,1 @@
-export const CourseSearchabelFields = ["title", "prefix", "code"];
+export const CourseSearchabelFields = ["title", "prefix"];
