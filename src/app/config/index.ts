@@ -20,4 +20,5 @@ export default {
     cloudinary_api_key: process.env.CLOUDINARY_API_KEY,
     cloudinary_api_secret: process.env.CLOUDINARY_API_SECRET,
     gmail_app_password: process.env.GMAIL_APP_PASSWORD,
+    super_admin_password: process.env.SUPER_ADMIN_PASSWORD,
 };

@@ -30,7 +30,7 @@ const userSchema = new Schema<TUser, UserModel>(
         },
         role: {
             type: String,
-            enum: ["admin", "student", "faculty"],
+            enum: ["superAdmin", "admin", "student", "faculty"],
             required: true,
         },
         status: {
@@ -65,12 +65,6 @@ userSchema.post("save", function (doc, next) {
     doc.password = "";
     next();
 });
-
-// creating a custom static method
-// userSchema.statics.isUserExists = async function (id: string) {
-//     const existingUser = await User.findOne({ id });
-//     return existingUser;
-// };
 
 userSchema.statics.isUserExistsByCustomId = async function (id: string) {
     return await User.findOne({ id }).select("+password");

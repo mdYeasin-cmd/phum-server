@@ -8,13 +8,12 @@ export interface TUser {
     password: string;
     passwordChangeAt?: Date;
     needsPasswordChange: boolean;
-    role: "admin" | "student" | "faculty";
+    role: "superAdmin" | "admin" | "student" | "faculty";
     status: "in-progress" | "blocked";
     isDeleted: boolean;
 }
 
 export interface UserModel extends Model<TUser> {
-    // myStaticMethod(): number;
     isUserExistsByCustomId(id: string): Promise<TUser>;
     isPasswordMatched(
         plainTextPassword: string,

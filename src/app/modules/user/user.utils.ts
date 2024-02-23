@@ -20,6 +20,8 @@ export const findLastStudentId = async () => {
 
 // generate student id
 export const generateStudentId = async (payload: TAcademicSemester) => {
+    console.log("start genarating student id");
+
     let currentId = (0).toString();
 
     const lastStudentId = await findLastStudentId();
