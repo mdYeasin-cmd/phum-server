@@ -56,7 +56,6 @@ const createStudentValidationSchema = z.object({
                 invalid_type_error: "Academic department name must be a string",
                 required_error: "Academic department name is required",
             }),
-            // profileImg: z.string(),
         }),
     }),
 });

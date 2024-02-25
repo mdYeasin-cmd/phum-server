@@ -14,14 +14,6 @@ const userNameSchema = new Schema<TUserName>({
         required: [true, "First name is required"],
         maxlength: [25, "First name can't be more than 25 characters"],
         trim: true,
-        // validate: {
-        //   validator: function (value: string) {
-        //     return (
-        //       value === value.charAt(0).toUpperCase() + value.slice(1).toLowerCase()
-        //     );
-        //   },
-        //   message: "{VALUE} is not capitalize format",
-        // },
     },
     middleName: {
         type: String,
@@ -31,12 +23,6 @@ const userNameSchema = new Schema<TUserName>({
         type: String,
         required: [true, "Last name is required"],
         trim: true,
-        // validate: {
-        //   validator: function (value: string) {
-        //     return validator.isAlpha(value);
-        //   },
-        //   message: "{VALUE} is not valid value",
-        // },
     },
 });
 
@@ -118,10 +104,6 @@ const studentSchema = new Schema<TStudent>(
             type: String,
             required: [true, "Email is required"],
             unique: true,
-            // validate: {
-            //   validator: (value: string) => validator.isEmail(value),
-            //   message: "{VALUE} is not a valid email",
-            // },
         },
         contactNo: {
             type: String,
@@ -180,9 +162,7 @@ const studentSchema = new Schema<TStudent>(
 
 studentSchema.pre("findOneAndUpdate", async function (next) {
     // this keyword available only "save" method
-
     const query = this.getQuery();
-    // const update = this.getUpdate();
 
     const isStudentExist = await Student.findOne(query);
 
