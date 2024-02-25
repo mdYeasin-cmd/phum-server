@@ -68,8 +68,6 @@ const changePassword = async (
 ) => {
     const { userId, role } = userData;
 
-    console.log({ userData });
-
     const user = await User.isUserExistsByCustomId(userId);
 
     // check if ther user is exist!
