@@ -13,7 +13,7 @@ const loginUser = async (payload: TLoginUser) => {
 
     // check if ther user is exist!
     if (!user) {
-        throw new AppError(httpStatus.BAD_REQUEST, "This user is not found!");
+        throw new AppError(httpStatus.NOT_FOUND, "This user is not found!");
     }
 
     // check if the user is deleted!

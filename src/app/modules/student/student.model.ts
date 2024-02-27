@@ -148,7 +148,7 @@ const studentSchema = new Schema<TStudent>(
         },
         academicFaculty: {
             type: Schema.Types.ObjectId,
-            ref: "AcademicFaacademicFaculty",
+            ref: "AcademicFaculty",
         },
         isDeleted: {
             type: Boolean,
@@ -157,8 +157,16 @@ const studentSchema = new Schema<TStudent>(
     },
     {
         timestamps: true,
+        toJSON: {
+            virtuals: true,
+        },
     },
 );
+
+//virtual
+studentSchema.virtual("fullName").get(function () {
+    return `${this?.name?.firstName} ${this?.name?.middleName} ${this?.name?.lastName}`;
+});
 
 studentSchema.pre("findOneAndUpdate", async function (next) {
     // this keyword available only "save" method
