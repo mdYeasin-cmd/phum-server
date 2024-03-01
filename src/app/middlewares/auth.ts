@@ -66,13 +66,14 @@ const auth = (...requiredRoles: TUserRole[]) => {
                 );
             }
 
-            if (
-                user?.passwordChangeAt &&
+            // isJWTIssuedBeforePasswordChanged mongoose middleware is a synchronous, we can't use await here
+            const isJWTIssuedBeforePasswordChanged =
                 User.isJWTIssuedBeforePasswordChanged(
-                    user?.passwordChangeAt,
+                    user?.passwordChangeAt as Date,
                     iat as number,
-                )
-            ) {
+                );
+
+            if (user?.passwordChangeAt && isJWTIssuedBeforePasswordChanged) {
                 throw new AppError(
                     httpStatus.UNAUTHORIZED,
                     "You are not authorized!",
